@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:edit, :update, :destroy]
 
   def index
-    @books = Book.page(params[:page]).per(4)
+    @books = Book.with_attached_image.page(params[:page]).per(4)
   end
 
   def new
@@ -10,7 +10,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    
+    # 本とreviewはhas_manyの関係にあるのでincludesでreviewsユーザーを含めてSQLで一括で情報を取ってくる
+    # @book = Book.with_attached_image.includes(:reviews, :user).find(params[:id])
+    @book = Book.with_attached_image.find(params[:id])
   end
 
   def edit

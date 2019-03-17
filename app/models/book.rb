@@ -6,6 +6,9 @@ class Book < ApplicationRecord
   # その関連付けを行う。
   has_many :reviews, dependent: :destroy
 
+  #Bookモデルからレビューした人のユーザー情報を取ってくる時にレビューを介してユーザーの情報を取ってくる事を明示する
+  has_many :users, through: :reviews
+
   validates :title, presence: true, length: { maximum: 50 }
   validates :price, presence: true,
     numericality: {
