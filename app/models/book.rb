@@ -18,6 +18,9 @@ class Book < ApplicationRecord
   validates :publish_date, presence: true
   validates :description, presence: true, length: { maximum: 1000 }
 
+  scope :find_newest_books, -> (p) { page(p).per(4).order(publish_date: :desc) }
+
+
   # バリデーションチェックで引っかからなかった場合にDBにセーブする前に保存される
   before_save do
     self.image = new_image if new_image
