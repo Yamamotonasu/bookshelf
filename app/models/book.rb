@@ -2,6 +2,9 @@ class Book < ApplicationRecord
   belongs_to :category
   has_one_attached :image
   attribute :new_image
+  # 本の情報が削除されたらそれに関連するレビューも削除されなければならない。
+  # その関連付けを行う。
+  has_many :reviews, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :price, presence: true,
